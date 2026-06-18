@@ -1,14 +1,14 @@
 ﻿import "./App.css";
 
-import Activos from "./components/activos";
-import Comandos from "./components/comandos";
-import Controles from "./components/controles";
-import InyeccionSQL from "./components/inyeccionsql";
-import Matriz from "./components/matriz";
-import Prompts from "./components/prompts";
-import Recuperacion from "./components/recuperacion";
-import Resumen from "./components/resumen";
-import XSS from "./components/xss";
+import Activos from "./components/activos_flonic";
+import Comandos from "./components/comandos_flonic";
+import Controles from "./components/controles_flonic";
+import InyeccionSQL from "./components/inyeccionsql_flonic";
+import Matriz from "./components/matriz_flonic";
+import Prompts from "./components/prompts_flonic";
+import Recuperacion from "./components/recuperacion_flonic";
+import Resumen from "./components/resumen_flonic";
+import XSS from "./components/xss_flonic";
 
 function App() {
   return (

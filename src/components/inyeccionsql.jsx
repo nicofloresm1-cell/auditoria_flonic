@@ -1,6 +1,6 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
-import content from "../../docs_auditoria_flonic/inyeccionsql.md?raw";
+import content from "../../docs_auditoria_flonic/inyeccionsql_flonic.md?raw";
 
 export default function InyeccionSQL() {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
-import content from "../../docs_auditoria_flonic/recuperacion.md?raw";
+import content from "../../docs_auditoria_flonic/recuperacion_flonic.md?raw";
 
 export default function Recuperacion() {
 	return (

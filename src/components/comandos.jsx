@@ -1,6 +1,6 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
-import content from "../../docs_auditoria_flonic/comandos.md?raw";
+import content from "../../docs_auditoria_flonic/comandos_flonic.md?raw";
 
 export default function Comandos() {
 	return (
