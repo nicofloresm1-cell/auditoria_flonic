@@ -1,32 +1,41 @@
-﻿import "./App.css";
+﻿import { useState } from "react";
+import Activos from "./components/activos";
+import Comandos from "./components/comandos";
+import Controles from "./components/controles";
+import InyeccionSQL from "./components/inyeccionsql";
+import Matriz from "./components/matriz";
+import Prompts from "./components/prompts";
+import Recuperacion from "./components/recuperacion";
+import Resumen from "./components/resumen";
+import XSS from "./components/xss";
+import Navigation from "./components/layout/Navigation";
+import { PAGES } from "./config/pages";
 
-import Activos from "./components/activos_flonic";
-import Comandos from "./components/comandos_flonic";
-import Controles from "./components/controles_flonic";
-import InyeccionSQL from "./components/inyeccionsql_flonic";
-import Matriz from "./components/matriz_flonic";
-import Prompts from "./components/prompts_flonic";
-import Recuperacion from "./components/recuperacion_flonic";
-import Resumen from "./components/resumen_flonic";
-import XSS from "./components/xss_flonic";
+
+const PAGE_COMPONENTS = {
+  resumen: Resumen,
+  activos: Activos,
+  controles: Controles,
+  inyeccionsql: InyeccionSQL,
+  xss: XSS,
+  comandos: Comandos,
+  matriz: Matriz,
+  recuperacion: Recuperacion,
+  prompts: Prompts,
+};
 
 function App() {
-  return (
-    <div className="App min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100">
-      <header className="py-8 px-4">
-        <h1 className="text-4xl sm:text-5xl font-semibold">Auditoría Flonic</h1>
-      </header>
+  const [activePageId, setActivePageId] = useState(PAGES[0].id);
+  const ActivePage = PAGE_COMPONENTS[activePageId];
 
-      <main className="container mx-auto px-4 pb-12 grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        <Activos />
-        <Comandos />
-        <Controles />
-        <InyeccionSQL />
-        <Matriz />
-        <Prompts />
-        <Recuperacion />
-        <Resumen />
-        <XSS />
+  return (
+    <div className="flex min-h-screen flex-col bg-slate-100 text-slate-800 dark:bg-slate-950 dark:text-slate-100 lg:flex-row">
+      <Navigation activePageId={activePageId} onNavigate={setActivePageId} />
+
+      <main className="flex-1 overflow-x-hidden">
+        <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12">
+          {ActivePage && <ActivePage />}
+        </div>
       </main>
     </div>
   );
