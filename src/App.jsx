@@ -14,12 +14,12 @@ import { PAGES } from "./config/pages";
 
 const PAGE_COMPONENTS = {
   resumen: Resumen,
-  activos: Activos,
-  controles: Controles,
   inyeccionsql: InyeccionSQL,
   xss: XSS,
   comandos: Comandos,
+  activos: Activos,
   matriz: Matriz,
+  controles: Controles,
   recuperacion: Recuperacion,
   prompts: Prompts,
 };

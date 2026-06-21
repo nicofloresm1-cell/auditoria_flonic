@@ -24,6 +24,16 @@ export default function Navigation({ activePageId, onNavigate }) {
 
   const navItems = PAGES.map((page) => (
     <li key={page.id}>
+      {page.id === "resumen" && (
+        <p className="px-3 pb-1 pt-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+          Informe 1° parte
+        </p>
+      )}
+      {page.id === "activos" && (
+        <p className="px-3 pb-1 pt-4 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+          Informe 2° parte
+        </p>
+      )}
       <button
         type="button"
         onClick={() => handleNavigate(page.id)}

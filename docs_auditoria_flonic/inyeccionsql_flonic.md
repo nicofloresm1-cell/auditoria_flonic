@@ -34,6 +34,36 @@ En un escenario real contra el portal de AFP Horizonte, esta misma técnica podr
 
 ## 3. Puntaje y severidad CVSS
 
+Cálculo realizado con la calculadora oficial: https://www.first.org/cvss/calculator/3.1
+
+**Vector CVSS 3.1:** `AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N`
+**Puntaje base:** **9.1 / 10 — Severidad Crítica**
+
+### Justificación de cada métrica
+
+**Vector de ataque (AV) = Red (N)**
+El ataque se ejecuta enviando una solicitud HTTP normal a través de internet/red — no se necesita estar físicamente en el servidor ni en la misma red local. Por eso es "Red", el nivel más explotable.
+
+**Complejidad de ataque (AC) = Bajo (L)**
+El payload: una sola cadena de texto (`' OR '1'='1`) sin necesidad de condiciones especiales, sin tener que esperar timing exacto ni vencer protecciones adicionales. Cualquier persona puede reproducirlo copiando y pegando.
+
+**Privilegios requeridos (PR) = Ninguno (N)**
+No se necesita estar autenticado como admin ni tener ninguna cuenta especial — el formulario de "User ID" es de acceso libre dentro de la app (no hay control de acceso adicional).
+
+**Interacción de usuario (UI) = Ninguno (N)**
+No depende de que otra persona haga clic en algo o abra un enlace. El propio atacante envía el payload directamente y obtiene el resultado de inmediato — a diferencia del XSS, donde se necesita que la víctima visite una página.
+
+**Alcance (S) = Sin cambios (U)**
+El impacto queda contenido dentro del mismo componente vulnerable (la aplicación/base de datos), sin "saltar" a otro sistema con un nivel de privilegios distinto.
+
+**Confidencialidad (C) = Alto (H)**
+Quedó demostrado: el ataque expuso toda la tabla de usuarios (admin, Gordon Brown, Hack Me, Pablo Picasso, Bob Smith), no solo un registro. Acceso total a datos que deberían estar protegidos = impacto alto.
+
+**Integridad (I) = Alto (H)**
+Aunque el payload específico solo leyó datos, la misma técnica de inyección (sin consultas parametrizadas) permite construir otros payloads que modifiquen o borren registros (`UPDATE`, `DELETE`) si la cuenta de base de datos tiene esos permisos — por eso se califica el potencial máximo de la vulnerabilidad, no solo lo que se probó puntualmente.
+
+**Disponibilidad (A) = Ninguno (N)**
+El ataque no detuvo el servicio ni afectó que otros usuarios sigan usando la aplicación normalmente — no hubo impacto en disponibilidad.
 
 ## 4. Política de prevención (3.1.4)
 

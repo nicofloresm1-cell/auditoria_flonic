@@ -7,23 +7,12 @@ export const PAGES = [
     accent: "violet",
   },
   {
-    id: "activos",
-    title: "Activos",
-    subtitle: "Inventario de activos críticos del portal auditado",
-    accent: "blue",
-  },
-  {
-    id: "controles",
-    title: "Controles",
-    subtitle: "Controles de seguridad evaluados y su efectividad",
-    accent: "emerald",
-  },
-  {
     id: "inyeccionsql",
     title: "Inyección SQL",
     subtitle: "Vulnerabilidades de acceso no autorizado a la base de datos",
     accent: "rose",
   },
+  
   {
     id: "xss",
     title: "Cross-Site Scripting",
@@ -37,10 +26,22 @@ export const PAGES = [
     accent: "orange",
   },
   {
+    id: "activos",
+    title: "Activos",
+    subtitle: "Inventario de activos críticos del portal auditado",
+    accent: "blue",
+  },
+  {
     id: "matriz",
     title: "Matriz de Riesgo",
     subtitle: "Priorización de hallazgos según impacto y probabilidad",
     accent: "indigo",
+  },
+  {
+    id: "controles",
+    title: "Controles",
+    subtitle: "Controles de seguridad evaluados y su efectividad",
+    accent: "emerald",
   },
   {
     id: "recuperacion",
