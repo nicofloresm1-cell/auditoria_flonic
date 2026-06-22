@@ -1,6 +1,7 @@
 import ReactMarkdown from "react-markdown";
 import { ACCENT_STYLES } from "../../config/pages";
 import PageIcon from "./PageIcon";
+import remarkGfm from "remark-gfm";
 
 export default function MarkdownLanding({ pageId, title, subtitle, accent, content }) {
   const styles = ACCENT_STYLES[accent] ?? ACCENT_STYLES.violet;
@@ -45,7 +46,8 @@ export default function MarkdownLanding({ pageId, title, subtitle, accent, conte
           </div>
         ) : (
           <div className="md-content prose prose-slate max-w-none text-left dark:prose-invert">
-            <ReactMarkdown>{trimmed}</ReactMarkdown>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{trimmed}</ReactMarkdown>
+
           </div>
         )}
       </section>
