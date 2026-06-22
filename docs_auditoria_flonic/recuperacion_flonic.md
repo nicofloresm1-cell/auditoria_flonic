@@ -34,7 +34,7 @@ Esta mejora ataca directamente las causas raíz de los tres hallazgos del labora
 2. **Contención:** aislar el sistema afectado (ej. desconectar de la red, revocar credenciales comprometidas) para detener la propagación del ataque.
 3. **Erradicación:** eliminar la causa raíz (parchear la vulnerabilidad explotada, remover código malicioso si se instaló alguno).
 4. **Recuperación:** restaurar el servicio desde un respaldo limpio y verificado, confirmando la integridad de los datos antes de volver a producción.
-5. **Lecciones aprendidas:** documentar el incidente, actualizar las políticas de prevención (`07_controles_flonic.md`) y comunicar internamente los aprendizajes.
+5. **Lecciones aprendidas:** documentar el incidente, actualizar las políticas de prevención (`controles`) y comunicar internamente los aprendizajes.
 
 ### 2.4 Comunicación ante el incidente
 

@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+﻿import { useEffect, useState } from "react";
 import Activos from "./components/activos";
 import Comandos from "./components/comandos";
 import Controles from "./components/controles";
@@ -10,7 +10,6 @@ import Resumen from "./components/resumen";
 import XSS from "./components/xss";
 import Navigation from "./components/layout/Navigation";
 import { PAGES } from "./config/pages";
-
 
 const PAGE_COMPONENTS = {
   resumen: Resumen,
@@ -27,6 +26,10 @@ const PAGE_COMPONENTS = {
 function App() {
   const [activePageId, setActivePageId] = useState(PAGES[0].id);
   const ActivePage = PAGE_COMPONENTS[activePageId];
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [activePageId]);
 
   return (
     <div className="flex min-h-screen flex-col bg-slate-100 text-slate-800 dark:bg-slate-950 dark:text-slate-100 lg:flex-row">
