@@ -71,11 +71,19 @@ function HeatMap() {
   );
 }
 
-// Parte el .md justo antes de "## 4. Priorización" para insertar el mapa de calor ahí
 const marker = "## 4. Priorización";
 const splitIndex = content.indexOf(marker);
 const parteAntes = splitIndex >= 0 ? content.slice(0, splitIndex) : content;
 const parteDespues = splitIndex >= 0 ? content.slice(splitIndex) : "";
+
+
+const markdownComponents = {
+  table: ({ children }) => (
+    <div className="mb-4 overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700">
+      <table className="w-full">{children}</table>
+    </div>
+  ),
+};
 
 export default function Matriz() {
   return (
@@ -104,7 +112,7 @@ export default function Matriz() {
       {parteDespues && (
         <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-md sm:p-10 dark:border-slate-700 dark:bg-slate-800/90">
           <div className="md-content prose prose-slate max-w-none text-left dark:prose-invert">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{parteDespues}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>{parteDespues}</ReactMarkdown>
           </div>
         </div>
       )}

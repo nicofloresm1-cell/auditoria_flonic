@@ -3,6 +3,14 @@ import { ACCENT_STYLES } from "../../config/pages";
 import PageIcon from "./PageIcon";
 import remarkGfm from "remark-gfm";
 
+const markdownComponents = {
+  table: ({ children }) => (
+    <div className="mb-4 overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700">
+      <table className="w-full">{children}</table>
+    </div>
+  ),
+};
+
 export default function MarkdownLanding({ pageId, title, subtitle, accent, content }) {
   const styles = ACCENT_STYLES[accent] ?? ACCENT_STYLES.violet;
   const trimmed = content?.trim() ?? "";
@@ -46,7 +54,7 @@ export default function MarkdownLanding({ pageId, title, subtitle, accent, conte
           </div>
         ) : (
           <div className="md-content prose prose-slate max-w-none text-left dark:prose-invert">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{trimmed}</ReactMarkdown>
+            <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>{trimmed}</ReactMarkdown>
 
           </div>
         )}
