@@ -5,8 +5,13 @@ import remarkGfm from "remark-gfm";
 
 const markdownComponents = {
   table: ({ children }) => (
-    <div className="mb-4 overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700">
-      <table className="w-full">{children}</table>
+    <div className="mb-4">
+      <p className="mb-1 text-xs text-slate-400 dark:text-slate-500 sm:hidden">
+        ← Desliza para ver la tabla completa →
+      </p>
+      <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700">
+        <table className="w-full min-w-[640px]">{children}</table>
+      </div>
     </div>
   ),
 };
