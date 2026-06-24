@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ACCENT_STYLES, PAGES } from "../../config/pages";
 import PageIcon from "../shared/PageIcon";
 import { Menu, Shield, X } from "lucide-react";
-
+import ThemeToggle from "./ThemeToggle";
 
 
 function GithubIcon({ className }) {
@@ -59,7 +59,7 @@ export default function Navigation({ activePageId, onNavigate }) {
 
   return (
     <>
-      <div className="sticky top-0 z-40 flex items-center justify-between border-b border-slate-200 bg-white/95 px-4 py-3 shadow-sm backdrop-blur-md dark:border-slate-700 dark:bg-slate-900/95 lg:hidden">
+      <div className="sticky top-0 z-40 flex items-center justify-between border-b border-slate-200 bg-white50/95 px-4 py-3 shadow-sm backdrop-blur-md dark:border-slate-700 dark:bg-slate-900/95 lg:hidden">
         <div className="flex items-center gap-2">
           <Shield
             className="h-5 w-5 text-violet-600 dark:text-violet-400"
@@ -95,7 +95,7 @@ export default function Navigation({ activePageId, onNavigate }) {
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-slate-200 bg-white shadow-xl transition-transform duration-300 dark:border-slate-700 dark:bg-slate-900 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 lg:shadow-none ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-slate-200 bg-slate-50 shadow-xl transition-transform duration-300 dark:border-slate-700 dark:bg-slate-900 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 lg:shadow-none ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -128,16 +128,18 @@ export default function Navigation({ activePageId, onNavigate }) {
             <p className="text-left text-xs text-slate-400 dark:text-slate-500">
               AFP Horizonte · Auditoría de seguridad
             </p>
-
-            <a
-              href="https://github.com/nicofloresm1-cell "
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 rounded-lg p-1.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
-              aria-label="Ver repositorio en GitHub"
-            >
-              <GithubIcon className="h-4 w-4" aria-hidden="true" />
-            </a>
+            <div className="flex items-center gap-1">
+              <ThemeToggle />
+              <a
+                href="https://github.com/nicofloresm1-cell"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 rounded-lg p-1.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
+                aria-label="Ver repositorio en GitHub"
+              >
+                <GithubIcon className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </div>
           </div>
         </footer>
       </aside>

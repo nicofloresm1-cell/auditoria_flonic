@@ -4,6 +4,8 @@
 @source "../index.html";
 @source "../src/**/*.{js,jsx}";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   *,
   *::before,
