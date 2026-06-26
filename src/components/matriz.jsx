@@ -14,10 +14,10 @@ const RIESGOS = [
 ];
 
 const COLORES = {
-  bajo: "bg-green-100 text-green-900 dark:bg-green-900/40 dark:text-green-100",
-  medio: "bg-amber-200 text-amber-900 dark:bg-amber-800/60 dark:text-amber-100",
-  alto: "bg-orange-300 text-orange-900 dark:bg-orange-800/60 dark:text-orange-100",
-  critico: "bg-red-300 text-red-900 dark:bg-red-800/60 dark:text-red-100",
+  bajo: "bg-green-100 text-green-900 ring-1 ring-green-200/60 dark:bg-green-900/40 dark:text-green-100 dark:ring-green-700/40",
+  medio: "bg-amber-100 text-amber-900 ring-1 ring-amber-200/60 dark:bg-amber-800/50 dark:text-amber-100 dark:ring-amber-600/40",
+  alto: "bg-orange-200 text-orange-900 ring-1 ring-orange-300/60 dark:bg-orange-800/50 dark:text-orange-100 dark:ring-orange-600/40",
+  critico: "bg-red-200 text-red-900 ring-1 ring-red-300/60 dark:bg-red-800/50 dark:text-red-100 dark:ring-red-600/40",
 };
 
 function nivelDeRiesgo(valor) {
@@ -33,16 +33,16 @@ function HeatMap() {
 
   return (
     <div className="overflow-x-auto">
-      <div className="grid min-w-[480px] grid-cols-6 gap-1">
+      <div className="grid min-w-[480px] grid-cols-6 gap-1.5">
         <div />
         {impactos.map((i) => (
-          <div key={i} className="text-center text-xs text-slate-500 dark:text-slate-400 py-1">
+          <div key={i} className="py-1.5 text-center text-xs font-medium text-slate-500 dark:text-slate-400">
             Impacto {i}
           </div>
         ))}
         {probs.map((p) => (
           <div key={p} className="contents">
-            <div className="flex items-center justify-end pr-2 text-xs text-slate-500 dark:text-slate-400">
+            <div className="flex items-center justify-end pr-2 text-xs font-medium text-slate-500 dark:text-slate-400">
               Prob. {p}
             </div>
             {impactos.map((i) => {
@@ -52,7 +52,7 @@ function HeatMap() {
               return (
                 <div
                   key={i}
-                  className={`flex h-14 items-center justify-center rounded-md text-sm font-medium ${COLORES[nivel]}`}
+                  className={`flex h-14 items-center justify-center rounded-lg text-sm font-semibold transition-transform hover:scale-[1.02] ${COLORES[nivel]}`}
                 >
                   {riesgo ? riesgo.label : valor}
                 </div>
@@ -61,11 +61,11 @@ function HeatMap() {
           </div>
         ))}
       </div>
-      <div className="mt-4 flex flex-wrap gap-4 text-xs text-slate-500 dark:text-slate-400">
-        <span className="flex items-center gap-1"><span className="h-3 w-3 rounded bg-green-100 dark:bg-green-900/40" /> Bajo (1-4)</span>
-        <span className="flex items-center gap-1"><span className="h-3 w-3 rounded bg-amber-200 dark:bg-amber-800/60" /> Medio (5-9)</span>
-        <span className="flex items-center gap-1"><span className="h-3 w-3 rounded bg-orange-300 dark:bg-orange-800/60" /> Alto (10-15)</span>
-        <span className="flex items-center gap-1"><span className="h-3 w-3 rounded bg-red-300 dark:bg-red-800/60" /> Crítico (16-25)</span>
+      <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs text-slate-500 dark:text-slate-400">
+        <span className="flex items-center gap-1.5"><span className="h-3 w-3 rounded-sm bg-green-100 ring-1 ring-green-200/60 dark:bg-green-900/40 dark:ring-green-700/40" /> Bajo (1-4)</span>
+        <span className="flex items-center gap-1.5"><span className="h-3 w-3 rounded-sm bg-amber-100 ring-1 ring-amber-200/60 dark:bg-amber-800/50 dark:ring-amber-600/40" /> Medio (5-9)</span>
+        <span className="flex items-center gap-1.5"><span className="h-3 w-3 rounded-sm bg-orange-200 ring-1 ring-orange-300/60 dark:bg-orange-800/50 dark:ring-orange-600/40" /> Alto (10-15)</span>
+        <span className="flex items-center gap-1.5"><span className="h-3 w-3 rounded-sm bg-red-200 ring-1 ring-red-300/60 dark:bg-red-800/50 dark:ring-red-600/40" /> Crítico (16-25)</span>
       </div>
     </div>
   );
@@ -79,11 +79,11 @@ const parteDespues = splitIndex >= 0 ? content.slice(splitIndex) : "";
 
 const markdownComponents = {
   table: ({ children }) => (
-    <div className="mb-4">
-      <p className="mb-1 text-xs text-slate-400 dark:text-slate-500 sm:hidden">
+    <div className="mb-5">
+      <p className="mb-2 text-xs font-medium text-slate-400 dark:text-slate-500 sm:hidden">
         ← Desliza para ver la tabla completa →
       </p>
-      <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700">
+      <div className="overflow-x-auto rounded-xl border border-slate-200/80 shadow-sm dark:border-slate-700/80">
         <table className="w-full min-w-[640px]">{children}</table>
       </div>
     </div>
@@ -95,12 +95,12 @@ export default function Matriz() {
     <div>
       <MarkdownLanding pageId="matriz" {...PAGE_META.matriz} content={parteAntes} />
 
-      <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-md dark:border-slate-700 dark:bg-slate-800/90">
-        <h2 className="mb-4 text-lg font-semibold text-slate-900 dark:text-white">
+      <div className="mt-6 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm sm:mt-8 dark:border-slate-700/80 dark:bg-slate-900/60">
+        <h2 className="mb-5 border-b border-slate-200/80 pb-3 text-lg font-semibold tracking-tight text-slate-900 dark:border-slate-700/80 dark:text-white">
           3. Mapa de calor — Probabilidad × Impacto
         </h2>
         <HeatMap />
-        <p className="mt-4 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+        <p className="mt-5 rounded-lg border border-slate-100 bg-slate-50/80 p-4 text-sm leading-relaxed text-slate-500 dark:border-slate-700/60 dark:bg-slate-800/40 dark:text-slate-400">
     <strong className="text-slate-700 dark:text-slate-300">Cómo leer este mapa de calor:</strong>{" "}
     cada celda cruza una probabilidad (eje vertical) con un impacto (eje horizontal); el número
     es el resultado de Probabilidad × Impacto, el "puntaje de riesgo" de esa combinación (escala
@@ -115,7 +115,7 @@ export default function Matriz() {
       </div>
 
       {parteDespues && (
-        <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-md sm:p-10 dark:border-slate-700 dark:bg-slate-800/90">
+        <div className="mt-6 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm sm:mt-8 sm:p-10 dark:border-slate-700/80 dark:bg-slate-900/60">
           <div className="md-content prose prose-slate max-w-none text-left dark:prose-invert">
           <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>{parteDespues}</ReactMarkdown>
           </div>
