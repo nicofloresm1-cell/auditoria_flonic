@@ -6,6 +6,65 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(1.08); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes orb-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(8px, -12px) scale(1.05); }
+  66% { transform: translate(-6px, 6px) scale(0.97); }
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.992);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @layer base {
   *,
   *::before,
@@ -54,19 +113,105 @@
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-slate-400 dark:bg-slate-500;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
 @layer components {
+  .animate-page-enter {
+    animation: page-enter 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.5s ease both;
+  }
+
+  .animate-slide-in {
+    animation: slide-in-right 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .animate-float {
+    animation: float-soft 4s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 5s ease-in-out infinite;
+  }
+
+  .animate-orb-drift {
+    animation: orb-drift 12s ease-in-out infinite;
+  }
+
+  .animate-orb-drift-reverse {
+    animation: orb-drift 14s ease-in-out infinite reverse;
+  }
+
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-400 { animation-delay: 400ms; }
+
+  .bg-grid-pattern {
+    background-image:
+      linear-gradient(to right, rgb(148 163 184 / 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(148 163 184 / 0.07) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .dark .bg-grid-pattern {
+    background-image:
+      linear-gradient(to right, rgb(148 163 184 / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(148 163 184 / 0.04) 1px, transparent 1px);
+  }
+
+  .bg-dot-pattern {
+    background-image: radial-gradient(rgb(124 58 237 / 0.12) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .dark .bg-dot-pattern {
+    background-image: radial-gradient(rgb(124 58 237 / 0.08) 1px, transparent 1px);
+  }
+
+  .glass-panel {
+    @apply border border-slate-200/70 bg-white/80 shadow-lg shadow-slate-900/[0.04] backdrop-blur-xl dark:border-slate-700/60 dark:bg-slate-900/70 dark:shadow-black/20;
+  }
+
+  .hero-shimmer-line {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(124 58 237 / 0.35) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 4s ease-in-out infinite;
+  }
+
+  .nav-active-bar {
+    @apply absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-full transition-all duration-300;
+  }
+
   .md-content h1 {
-    @apply mb-5 text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl;
+    @apply mb-5 scroll-mt-24 text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl;
   }
 
   .md-content h2 {
-    @apply mb-4 mt-10 border-b border-slate-200/80 pb-2 text-xl font-semibold tracking-tight text-slate-800 dark:border-slate-700/80 dark:text-slate-100;
+    @apply relative mb-4 mt-10 scroll-mt-24 border-b border-slate-200/80 pb-3 pl-4 text-xl font-semibold tracking-tight text-slate-800 before:absolute before:left-0 before:top-1 before:h-[calc(100%-0.5rem)] before:w-1 before:rounded-full before:bg-gradient-to-b before:from-violet-400 before:to-violet-600/60 dark:border-slate-700/80 dark:text-slate-100 dark:before:from-violet-500 dark:before:to-violet-400/50;
   }
 
   .md-content h3 {
-    @apply mb-3 mt-7 text-lg font-semibold tracking-tight text-slate-800 dark:text-slate-100;
+    @apply mb-3 mt-7 scroll-mt-24 text-lg font-semibold tracking-tight text-slate-800 dark:text-slate-100;
   }
 
   .md-content p {
@@ -99,11 +244,16 @@
   }
 
   .md-content code {
-    @apply rounded-md border border-slate-200/80 bg-slate-100/80 px-1.5 py-0.5 font-mono text-[0.85em] text-violet-700 dark:border-slate-600/80 dark:bg-slate-800 dark:text-violet-300;
+    @apply rounded-md border border-slate-200/80 bg-slate-100/80 px-1.5 py-0.5 font-mono text-[0.85em] text-violet-700 transition-colors duration-200 dark:border-slate-600/80 dark:bg-slate-800 dark:text-violet-300;
   }
 
   .md-content pre {
-    @apply mb-5 overflow-x-auto rounded-xl border border-slate-800/20 bg-slate-900 p-4 text-sm leading-relaxed text-slate-100 shadow-inner;
+    @apply relative mb-5 overflow-x-auto rounded-xl border border-slate-800/30 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 p-4 text-sm leading-relaxed text-slate-100 shadow-[inset_0_1px_0_rgb(255_255_255/0.06),0_8px_24px_-8px_rgb(0_0_0/0.4)];
+  }
+
+  .md-content pre::before {
+    content: "";
+    @apply pointer-events-none absolute inset-x-0 top-0 h-8 rounded-t-xl bg-gradient-to-b from-white/[0.04] to-transparent;
   }
 
   .md-content pre code {
@@ -111,7 +261,7 @@
   }
 
   .md-content blockquote {
-    @apply my-5 rounded-r-lg border-l-4 border-violet-400/80 bg-violet-50/50 py-2 pl-4 pr-3 italic text-slate-600 dark:border-violet-500/60 dark:bg-violet-950/20 dark:text-slate-400;
+    @apply relative my-5 overflow-hidden rounded-r-xl border-l-4 border-violet-400/80 bg-gradient-to-r from-violet-50/80 to-transparent py-3 pl-5 pr-4 italic text-slate-600 shadow-sm dark:border-violet-500/60 dark:from-violet-950/30 dark:to-transparent dark:text-slate-400;
   }
 
   .md-content a {
@@ -127,15 +277,15 @@
   }
 
   .md-content thead {
-    @apply bg-slate-100/80 dark:bg-slate-800/80;
+    @apply bg-gradient-to-r from-slate-100 via-slate-50 to-slate-100 dark:from-slate-800 dark:via-slate-800/90 dark:to-slate-800;
   }
 
   .md-content th {
-    @apply border-b border-slate-200 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600 dark:border-slate-600 dark:text-slate-300;
+    @apply border-b border-slate-200/90 px-2 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-slate-600 sm:px-4 sm:py-3.5 sm:text-xs dark:border-slate-600 dark:text-slate-300;
   }
 
   .md-content td {
-    @apply border-b border-slate-100 px-4 py-3 text-slate-700 dark:border-slate-700/80 dark:text-slate-300;
+    @apply border-b border-slate-100 px-2 py-2.5 text-xs text-slate-700 transition-colors duration-200 sm:px-4 sm:py-3.5 sm:text-sm dark:border-slate-700/80 dark:text-slate-300;
   }
 
   .md-content tbody tr:last-child td {
@@ -143,6 +293,18 @@
   }
 
   .md-content tbody tr {
-    @apply transition-colors hover:bg-slate-50/80 dark:hover:bg-slate-800/40;
+    @apply transition-all duration-200 hover:bg-violet-50/40 hover:shadow-[inset_3px_0_0_rgb(139_92_246/0.5)] dark:hover:bg-violet-950/15;
+  }
+
+  .md-content ul li,
+  .md-content ol li {
+    @apply transition-transform duration-200;
+  }
+
+  @media (hover: hover) {
+    .md-content ul li:hover,
+    .md-content ol li:hover {
+      @apply translate-x-0.5;
+    }
   }
 }

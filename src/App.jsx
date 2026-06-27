@@ -32,16 +32,37 @@ function App() {
   }, [activePageId]);
 
   return (
-    <div className="flex min-h-screen flex-col bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 lg:flex-row">
+    <div className="relative flex min-h-screen flex-col overflow-x-hidden bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 lg:flex-row">
+      <div
+        className="pointer-events-none fixed inset-0 bg-grid-pattern opacity-60 dark:opacity-40"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none fixed inset-0 hidden bg-dot-pattern opacity-50 sm:block"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none fixed -left-32 top-0 hidden h-[320px] w-[320px] rounded-full bg-violet-400/10 blur-[100px] sm:block sm:h-[480px] sm:w-[480px] dark:bg-violet-600/15"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none fixed -right-24 bottom-0 hidden h-[280px] w-[280px] rounded-full bg-indigo-400/8 blur-[90px] sm:block sm:h-[420px] sm:w-[420px] dark:bg-indigo-500/12"
+        aria-hidden="true"
+      />
+
       <Navigation activePageId={activePageId} onNavigate={setActivePageId} />
 
-      <main className="relative flex-1 overflow-x-hidden">
+      <main className="relative min-w-0 flex-1 overflow-x-hidden lg:ml-72">
         <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(124,58,237,0.08),transparent)] dark:bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(124,58,237,0.12),transparent)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_-10%,rgba(124,58,237,0.1),transparent_55%)] dark:bg-[radial-gradient(ellipse_90%_60%_at_50%_-10%,rgba(124,58,237,0.16),transparent_55%)]"
           aria-hidden="true"
         />
         <div className="relative mx-auto w-full max-w-5xl px-4 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-14">
-          {ActivePage && <ActivePage />}
+          {ActivePage && (
+            <div key={activePageId} className="animate-page-enter">
+              <ActivePage />
+            </div>
+          )}
         </div>
       </main>
     </div>

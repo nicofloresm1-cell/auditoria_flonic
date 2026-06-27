@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ACCENT_STYLES, PAGES } from "../../config/pages";
 import PageIcon from "../shared/PageIcon";
 import { Menu, Shield, X } from "lucide-react";
@@ -15,6 +15,13 @@ function GithubIcon({ className }) {
 export default function Navigation({ activePageId, onNavigate }) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
   const handleNavigate = (pageId) => {
     onNavigate(pageId);
     setMobileOpen(false);
@@ -25,10 +32,10 @@ export default function Navigation({ activePageId, onNavigate }) {
     const styles = ACCENT_STYLES[accent];
 
     if (isActive) {
-      return `relative flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 ${styles.active}`;
+      return `group relative flex w-full items-center gap-3 overflow-hidden rounded-xl px-3 py-2.5 text-sm font-medium shadow-sm transition-all duration-300 ${styles.active}`;
     }
 
-    return "relative flex w-full items-center gap-3 rounded-lg border-l-2 border-transparent px-3 py-2.5 text-sm font-medium text-slate-600 transition-all duration-200 hover:bg-white/80 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/60 dark:hover:text-slate-100";
+    return "group relative flex w-full items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 text-sm font-medium text-slate-600 transition-all duration-300 hover:translate-x-0.5 hover:border-slate-200/80 hover:bg-white/90 hover:text-slate-900 hover:shadow-sm dark:text-slate-400 dark:hover:border-slate-700/60 dark:hover:bg-slate-800/70 dark:hover:text-slate-100";
   };
 
   const navItems = PAGES.map((page) => (
@@ -51,7 +58,16 @@ export default function Navigation({ activePageId, onNavigate }) {
         className={navLinkClass(page.id, page.accent)}
         aria-current={activePageId === page.id ? "page" : undefined}
       >
-        <PageIcon pageId={page.id} className="h-4 w-4 shrink-0" />
+        {activePageId === page.id && (
+          <span
+            className={`nav-active-bar ${ACCENT_STYLES[page.accent]?.activeBar ?? "bg-violet-500"}`}
+            aria-hidden="true"
+          />
+        )}
+        <PageIcon
+          pageId={page.id}
+          className={`h-4 w-4 shrink-0 transition-transform duration-300 ${activePageId === page.id ? "scale-110" : "group-hover:scale-110"}`}
+        />
         <span className="truncate">{page.title}</span>
       </button>
     </li>
@@ -59,9 +75,9 @@ export default function Navigation({ activePageId, onNavigate }) {
 
   return (
     <>
-      <div className="sticky top-0 z-40 flex items-center justify-between border-b border-slate-200/80 bg-white/90 px-4 py-3 shadow-sm backdrop-blur-xl dark:border-slate-700/80 dark:bg-slate-900/90 lg:hidden">
+      <div className="sticky top-0 z-40 flex items-center justify-between border-b border-slate-200/80 bg-white/85 px-4 py-3 shadow-[0_4px_24px_-12px_rgb(15_23_42/0.12)] backdrop-blur-xl dark:border-slate-700/80 dark:bg-slate-900/85 lg:hidden">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-violet-100 text-violet-700 dark:bg-violet-900/50 dark:text-violet-300">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-violet-700 text-white shadow-md shadow-violet-500/25">
             <Shield className="h-4 w-4" aria-hidden="true" />
           </div>
           <span className="text-sm font-semibold tracking-tight text-slate-900 dark:text-white">
@@ -94,37 +110,49 @@ export default function Navigation({ activePageId, onNavigate }) {
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-slate-200/80 bg-white shadow-2xl shadow-slate-900/10 transition-transform duration-300 ease-out dark:border-slate-700/80 dark:bg-slate-900 dark:shadow-black/30 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 lg:shadow-none ${
-          mobileOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed inset-y-0 left-0 z-50 flex h-svh w-[min(18rem,calc(100vw-1rem))] max-w-[85vw] flex-col border-r border-slate-200/80 bg-gradient-to-b from-white via-white to-slate-50/80 shadow-2xl shadow-slate-900/10 transition-transform duration-300 ease-out dark:border-slate-700/80 dark:from-slate-900 dark:via-slate-900 dark:to-slate-950/90 dark:shadow-black/30 lg:w-72 lg:max-w-none ${
+          mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
-        <div className="hidden border-b border-slate-200/80 px-6 py-6 dark:border-slate-700/80 lg:block">
-          <div className="flex items-center gap-3.5">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-violet-700 text-white shadow-md shadow-violet-500/25">
-              <Shield className="h-5 w-5" aria-hidden="true" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-violet-500/[0.06] to-transparent dark:from-violet-500/10" aria-hidden="true" />
+
+        <div className="relative shrink-0 border-b border-slate-200/80 px-4 py-4 dark:border-slate-700/80 sm:px-6 sm:py-5 lg:px-6 lg:py-6">
+          <div className="flex items-center gap-3 sm:gap-3.5">
+            <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-violet-700 text-white shadow-lg shadow-violet-500/30 ring-4 ring-violet-500/10 transition-transform duration-500 hover:scale-105 sm:h-11 sm:w-11">
+              <div className="absolute inset-0 animate-pulse-glow rounded-xl bg-violet-400/20 blur-md" aria-hidden="true" />
+              <Shield className="relative h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />
             </div>
 
-            <div className="text-left">
-              <p className="text-base font-bold tracking-tight text-slate-900 dark:text-white">
+            <div className="min-w-0 text-left">
+              <p className="truncate text-sm font-bold tracking-tight text-slate-900 dark:text-white sm:text-base">
                 Auditoría Flonic
               </p>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 sm:text-xs">
                 Portal de seguridad
               </p>
             </div>
+
+            <button
+              type="button"
+              onClick={() => setMobileOpen(false)}
+              className="ml-auto rounded-lg p-2 text-slate-500 transition-colors hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 lg:hidden"
+              aria-label="Cerrar menú"
+            >
+              <X className="h-5 w-5" />
+            </button>
           </div>
         </div>
 
         <nav
-          className="flex-1 overflow-y-auto px-3 py-4"
+          className="relative min-h-0 flex-1 overflow-y-auto px-3 py-4"
           aria-label="Secciones de la auditoría"
         >
-          <ul className="space-y-0.5">{navItems}</ul>
+          <ul className="space-y-1">{navItems}</ul>
         </nav>
 
-        <footer className="border-t border-slate-200/80 bg-slate-50/50 px-4 py-3.5 dark:border-slate-700/80 dark:bg-slate-800/30">
-          <div className="flex items-center justify-between gap-2">
-            <p className="text-left text-[11px] leading-snug text-slate-400 dark:text-slate-500">
+        <footer className="shrink-0 border-t border-slate-200/80 bg-slate-50/50 px-3 py-3 dark:border-slate-700/80 dark:bg-slate-800/30 sm:px-4 sm:py-3.5">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
+            <p className="text-left text-[10px] leading-snug text-slate-400 dark:text-slate-500 sm:text-[11px]">
               AFP Horizonte · Auditoría de seguridad
             </p>
             <div className="flex shrink-0 items-center gap-0.5">

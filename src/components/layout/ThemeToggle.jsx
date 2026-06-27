@@ -24,10 +24,14 @@ export default function ThemeToggle() {
     <button
       type="button"
       onClick={() => setIsDark((prev) => !prev)}
-      className="flex items-center gap-1.5 rounded-lg p-1.5 text-slate-500 transition-all duration-200 hover:bg-white hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/40 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
+      className="group flex items-center gap-1.5 rounded-lg p-1.5 text-slate-500 transition-all duration-300 hover:scale-105 hover:bg-white hover:text-slate-900 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/40 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
       aria-label={isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
     >
-      {isDark ? <Sun className="h-4 w-4" aria-hidden="true" /> : <Moon className="h-4 w-4" aria-hidden="true" />}
+      {isDark ? (
+        <Sun className="h-4 w-4 rotate-0 transition-transform duration-500 group-hover:rotate-45" aria-hidden="true" />
+      ) : (
+        <Moon className="h-4 w-4 rotate-0 transition-transform duration-500 group-hover:-rotate-12" aria-hidden="true" />
+      )}
     </button>
   );
 }
